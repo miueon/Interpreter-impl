@@ -61,7 +61,7 @@ class Lox {
     }
 }
 
-fun main(vararg args:String) {
+fun main(args:Array<String>) {
     if (args.size > 1) {
         println("Usage: jlox [srcipt]")
         System.exit(64)
