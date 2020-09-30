@@ -20,7 +20,7 @@ import kotlin.text.StringBuilder
 // conclusion: 1. we have a Tree-like classes ,
 class AstPrinter : Expr.Visitor<String> {
     fun print(expr: Expr): String {
-        return expr.accept(this)
+        return expr.accept(this)!!
     }
 
     override fun visitBinaryExpr(expr: Expr.Binary): String {

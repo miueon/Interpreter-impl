@@ -15,7 +15,8 @@ import kotlin.jvm.Throws
 class Lox {
     companion object{
         var hadError:Boolean = false
-
+        var hadRuntimeError:Boolean = false
+        val interpreter = Interpreter()
         fun runFile(path: String) {
             val bytes = Files.readAllBytes(Paths.get(path))
             run(String(bytes, Charset.defaultCharset()))
@@ -23,6 +24,9 @@ class Lox {
             // Indicate an error by the exit code
             if (hadError) {
                 System.exit(65)
+            }
+            if (hadRuntimeError) {
+                System.exit(70)
             }
         }
 
@@ -47,13 +51,17 @@ class Lox {
             val expression = parser.parse()
 
             if (hadError) return
-            println(AstPrinter().print(expression!!))
+           // println(AstPrinter().print(expression!!))
+            interpreter.interpret(expression)
         }
 
         fun error(line: Int, msg: String) {
             report(line, "", msg)
         }
-
+        fun runtimeError(error: RuntimeError) {
+            System.err.println("${error.message}\n[line ${error.token.line}]")
+            hadRuntimeError = true
+        }
         private fun report(line: Int, where: String, msg: String) {
             System.err.println(
                 "[line ${line} ] Error ${where} : ${msg}"

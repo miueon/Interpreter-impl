@@ -141,6 +141,7 @@ class Parser(
     }
 
     class ParseError : RuntimeException()
+
     private fun error(token: Token, msg:String): ParseError {
         Lox.error(token, msg)
         return ParseError()
