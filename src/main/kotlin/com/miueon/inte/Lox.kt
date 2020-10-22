@@ -17,6 +17,7 @@ class Lox {
         var hadError:Boolean = false
         var hadRuntimeError:Boolean = false
         val interpreter = Interpreter()
+        val resolver = Resolver(interpreter)
         fun runFile(path: String) {
             val bytes = Files.readAllBytes(Paths.get(path))
             run(String(bytes, Charset.defaultCharset()))
@@ -48,11 +49,18 @@ class Lox {
             val scanner = Scanner(source)
             val tokens:List<Token> = scanner.scanTokens()
             val parser = Parser(tokens)
-            val expression = parser.parse()
+            val statements = parser.parse()
 
             if (hadError) return
            // println(AstPrinter().print(expression!!))
-            interpreter.interpret(expression)
+
+
+            resolver.resolve(statements)
+
+            if (hadError) {
+                return
+            }
+            interpreter.interpret(statements)
         }
 
         fun error(line: Int, msg: String) {

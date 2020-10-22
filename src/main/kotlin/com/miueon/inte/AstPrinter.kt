@@ -19,6 +19,27 @@ import kotlin.text.StringBuilder
 
 // conclusion: 1. we have a Tree-like classes ,
 class AstPrinter : Expr.Visitor<String> {
+    override fun visitCallExpr(expr: Expr.Call): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun visitGetExpr(expr: Expr.Get): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun visitSetExpr(expr: Expr.Set): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun visitThisExpr(expr: Expr.This): String? {
+        TODO("Not yet implemented")
+    }
+
+
+    override fun visitSuperExpr(expr: Expr.Super): String? {
+        TODO("Not yet implemented")
+    }
+
     fun print(expr: Expr): String {
         return expr.accept(this)!!
     }
@@ -51,6 +72,18 @@ class AstPrinter : Expr.Visitor<String> {
             }
             append(")")
         }.toString()
+    }
+
+    override fun visitVariableExpr(expr: Expr.Variable): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun visitAssignExpr(expr: Expr.Assign): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun visitLogicalExpr(expr: Expr.Logical): String? {
+        TODO("Not yet implemented")
     }
 }
 

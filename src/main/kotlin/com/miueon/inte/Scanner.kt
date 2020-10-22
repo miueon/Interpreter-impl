@@ -106,7 +106,7 @@ class Scanner(
             if (isAtEnd()) {
                 Lox.error(line, "Unterminated string.")
             }
-            advance() // for the closing '"'
+            advance() // for the enclosing '"'
             val value = source.substring(start + 1, current - 1) // only take the pulp
             addToken(TokenType.STRING, value)
         }
@@ -162,12 +162,16 @@ class Scanner(
             '"' -> string()
 
             else ->
-                if (isDigit(c)) {
-                    number()
-                } else if (isAlpha(c)) {
-                    identifier()
-                } else {
-                    Lox.error(line, "Unexpected character.")
+                when {
+                    isDigit(c) -> {
+                        number()
+                    }
+                    isAlpha(c) -> {
+                        identifier()
+                    }
+                    else -> {
+                        Lox.error(line, "Unexpected character.")
+                    }
                 }
         }
     }
